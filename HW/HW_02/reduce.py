@@ -2,8 +2,26 @@
 from operator import itemgetter
 import sys
 import re
+
+def Punctuation(string):
+    # punctuation marks
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+    check = ""
+    # traverse the given string and if any punctuation
+    # marks occur replace it with null
+    for x in string.lower():
+        if x in punctuations:
+            string = string.replace(x, "")
+        if check == "'" and x == "s":
+            string = string.replace(x, "'s")
+        check = x
+    # Print string without punctuation
+    return (string)
+
 current_word = None
 current_count = 0
+
+
 
 for line in sys.stdin:
     line = line.strip()
@@ -11,7 +29,7 @@ for line in sys.stdin:
     # parse the input we got from mapper.py
     word, count = line.split('\t', 1)
     # clear regular expression
-    word = re.compile(r'\W+', re.UNICODE).split(word)[0]
+    word = Punctuation(word)
     count = int(count)
 
     # this IF-switch only works because Hadoop sorts map output
